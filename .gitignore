@@ -3,3 +3,4 @@
 .terraform.lock.hcl
 terraform.tfstate
 hello_lambda.zip
+terraform.tfstate.backup
