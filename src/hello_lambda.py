@@ -1,7 +1,12 @@
-import os, json, boto3, typing
+import boto3
+import json
+import os
+import typing
+
 client = boto3.client('lambda')
 account_id = os.environ['ACCOUNT_ID']
 region = os.environ['REGION']
+
 
 def invokeLambdaFunction(*, functionName: str = None, payload: typing.Mapping[str, str] = None):
     if functionName == None:
@@ -11,7 +16,7 @@ def invokeLambdaFunction(*, functionName: str = None, payload: typing.Mapping[st
     response = client.invoke(
         FunctionName=functionName,
         InvocationType="RequestResponse",
-        Payload= json.dumps(payload)
+        Payload=json.dumps(payload)
     )
     return response
 
@@ -19,6 +24,6 @@ def invokeLambdaFunction(*, functionName: str = None, payload: typing.Mapping[st
 def lambda_handler(event, context):
     payloadObj = {"something": "Bad News!"}
     response = invokeLambdaFunction(
-        functionName=f'arn:aws:lambda:{region}:{account_id}:function:demo-python',  payload=payloadObj)
+        functionName=f'arn:aws:lambda:{region}:{account_id}:function:demo-python', payload=payloadObj)
     print(f'response:{response}')
     return f'response:{response}'

@@ -5,3 +5,4 @@ terraform.tfstate
 hello_lambda.zip
 terraform.tfstate.backup
 .idea/
+/build/

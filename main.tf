@@ -7,10 +7,10 @@ provider "aws" {
 
 provider "archive" {}
 
-data "archive_file" "zip" {
+data "archive_file" "lambda_source_zip" {
   type        = "zip"
-  source_file = "hello_lambda.py"
-  output_path = "hello_lambda.zip"
+  source_file = "src/hello_lambda.py"
+  output_path = "build/hello_lambda.zip"
 }
 
 data "aws_iam_policy_document" "policy" {
@@ -61,8 +61,8 @@ data "aws_iam_policy_document" "lambda_log_and_invoke_policy" {
 resource "aws_lambda_function" "lambda" {
   function_name = "terraform_python"
 
-  filename         = "${data.archive_file.zip.output_path}"
-  source_code_hash = "${data.archive_file.zip.output_base64sha256}"
+  filename         = "${data.archive_file.lambda_source_zip.output_path}"
+  source_code_hash = "${data.archive_file.lambda_source_zip.output_base64sha256}"
 
   role    = "${aws_iam_role.iam_for_lambda.arn}"
   handler = "hello_lambda.lambda_handler"
