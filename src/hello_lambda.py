@@ -9,7 +9,7 @@ region = os.environ['REGION']
 
 
 def invokeLambdaFunction(*, functionName: str = None, payload: typing.Mapping[str, str] = None):
-    if functionName == None:
+    if functionName is None:
         raise Exception('ERROR: functionName parameter cannot be NULL')
     # payloadStr = json.dumps(payload)
     # payloadBytesArr = bytes(payloadStr, encoding='utf8')
@@ -22,8 +22,8 @@ def invokeLambdaFunction(*, functionName: str = None, payload: typing.Mapping[st
 
 
 def lambda_handler(event, context):
-    payloadObj = {"something": "Bad News!"}
+    payload = {"something": "Bad News!"}
     response = invokeLambdaFunction(
-        functionName=f'arn:aws:lambda:{region}:{account_id}:function:demo-python', payload=payloadObj)
+        functionName=f'arn:aws:lambda:{region}:{account_id}:function:demo-python', payload=payload)
     print(f'response:{response}')
     return f'response:{response}'
